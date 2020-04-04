@@ -1,0 +1,162 @@
+﻿<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5shiv.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<![endif]-->
+<link rel="stylesheet" type="text/css" href="h-ui/css/H-ui.min.css" />
+<link rel="stylesheet" type="text/css" href="h-ui.admin/css/H-ui.admin.css" />
+<link rel="stylesheet" type="text/css" href="lib/Hui-iconfont/1.0.8/iconfont.css" />
+<link rel="stylesheet" type="text/css" href="h-ui.admin/skin/default/skin.css" id="skin" />
+<link rel="stylesheet" type="text/css" href="h-ui.admin/css/style.css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="lib/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>学生信息管理</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 用户中心 <span class="c-gray en">&gt;</span> 用户管理 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	<div class="cl pd-5 bg-1 bk-gray mt-20" >
+        <span class="l" th:if="${session.user.getRole()} eq 2">
+        <a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
+        <a href="javascript:;" onclick="exdate()" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 批量导出</a>
+        </span>
+        <span class="r">共有数据：<strong th:text="${students.size()}"></strong> 条</span> </div>
+	<div class="mt-20">
+	<table class="table table-border table-bordered table-hover table-bg table-sort" id="tableSort">
+		<thead>
+			<tr class="text-c">
+				<th width="25"><input type="checkbox" name="" value=""></th>
+				<th width="80">学生号</th>
+				<th width="100">姓名</th>
+				<th width="40">性别</th>
+				<th width="90">手机</th>
+				<th width="150">邮箱</th>
+                <th width="150">所属学院</th>
+                <th width="150">所学专业</th>
+				<th width="">地址</th>
+				<th width="80">入学时间</th>
+				<th width="130">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+        <div th:each="student,memberStat:${students}">
+            <tr class="text-c">
+                <td><input type="checkbox" th:value="${student.getSid()}" name="" class="id"></td>
+                <td th:text="${student.getSid()}"></td>
+                <td th:text="${student.getStudent_name()}"></td>
+                <td th:text="${student.getSex()==1?'男':'女'}"></td>
+                <td th:text="${student.getStudent_phone()}"></td>
+                <td th:text="${student.getStudent_email()}"></td>
+                <td th:text="${student.getStudent_college()}"></td>
+                <td th:text="${student.getStudent_major()}"></td>
+                <td th:text="${student.getStudent_address()}"></td>
+                <td th:text="${student.getStart_year()}"></td>
+                <td >
+                  <span th:if="${session.user.getRole()==2}">
+                      <button class="btn" th:data-id="${student.getSid()}"  onclick="del(this.getAttribute('data-id'))" type="button">删除</button>
+                  </span>
+                    <button class="btn" th:data-id="${student.getSid()}" onclick="notice(this.getAttribute('data-id'))" type="button">通知</button>
+
+                </td>
+            </tr>
+        </div>
+
+		</tbody>
+	</table>
+        <div style="text-align: center;font-size: 18px">
+            <a id="btn0" class="a1" style="padding-right: 0px"></a>
+            <input id="pageSize" type="text" size="3" value="getDefaultValue()" class="ins"/>
+            <a class="a1"> 条 </a>
+            <a  id="pageSizeSet" class="a2">设置</a>
+            <a id="sjzl" class="a1"></a>
+            <a  id="btn1" class="a2">首页</a>
+            <a   id="btn2" class="a2">上一页</a>
+            <a   id="btn3" class="a2">下一页</a>
+            <a   id="btn4" class="a2">尾页</a>
+        </div>
+	</div>
+</div>
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="h-ui.admin/js/H-ui.admin.js"></script> <!--/_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+<script src="/js/fenye.js"></script>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="lib/My97DatePicker/4.8/WdatePicker.js"></script> 
+<script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
+<script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+    //删除用户
+    function del(sid) {
+        layer.confirm('确认删除吗？',function () {
+            $.ajax({
+                type: 'POST',
+                url: '/delStudent',
+                dataType: 'json',
+                data: {
+                    sid: sid
+                },
+                success: function (data) {
+                    window.location.reload();
+                }
+            })
+        })
+    }
+    //发送通知
+    function notice(sid) {
+        layer.confirm('确认给该学生发送通知吗？',function () {
+            location.href="sendNotice?sid="+sid;
+        })
+
+    }
+    //批量删除
+    function datadel() {
+        layer.confirm('确认删除吗？',function () {
+            var arrUserid = new Array();
+            $(".id").each(function(i) {
+                if (this.checked == true) {
+                    arrUserid[i] = $(this).val();
+                    $.ajax({
+                        type: 'POST',
+                        url: '/delStudent',
+                        dataType: 'json',
+                        data: {
+                            sid: arrUserid[i]
+                        }
+                    })
+                }
+            });
+            alert("批量删除成功")
+            window.location.reload();
+
+        })
+    }
+    //批量导出
+    function exdate(){
+        alert("全选");
+        var arrUserid = new Array();
+        $(".id").each(function(i) {
+            if (this.checked == true) {
+                arrUserid[i] = $(this).val();
+            }
+        });
+        var f=confirm("是否导出学生信息");
+        if(f){
+            location.href="/downStudentInfo?arrUserid="+arrUserid
+        }
+    }
+
+</script> 
+</body>
+</html>

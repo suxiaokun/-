@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<div th:if="${session.user.getPassword()}"></div>
+</body>
+<script th:inline="javascript" type="text/javascript" >
+    var password=[[${session.user.getPassword()}]];
+    if(password=='123456'){
+        var r=confirm("由于您首次登陆，为确保安全，请先完成密码修改和个人信息修改");
+        if(r==true){
+            window.location.href="/tosrc?src=UpdatePassword";
+        }
+    }
+</script>
+</html>

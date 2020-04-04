@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+	<title>Document</title>
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/css/info.css"/>
+</head>
+<script type="text/javascript">
+    window.onload=function(){
+        var odiv=document.getElementById("info");
+        var timer=null;
+
+        function Countdown(count,obj){
+            return function(){
+                if(count>0) {
+                    count=count-1;
+                    obj.innerHTML=count;
+                }
+                else {
+                    clearInterval(timer);
+                    location.href="#";
+
+                }
+            }
+        }
+        timer=setInterval(Countdown(5,odiv),1000);
+        odiv.innerHTML = 5;
+    }
+
+</script>
+<body>
+<div class="main" style="background-color: #ffffff;">
+	<div style="width: 937px;min-height: 555px;margin:0 auto;">
+		<span style="font-size: 43px;color:#333">信息提示</span>
+		<hr class="h_r"/>
+		<img alt="" src="/images/fail.jpg">
+		<div style="font-size: 40px; color: green;margin-top: 40px;padding-bottom: 10px; ">
+			<span th:text="${msg}"></span>
+		</div>
+		<p class="info1">
+			<span style="font-size: 30px;margin-top: 40px; padding-bottom: 10px;"id="info"></span>
+			秒后自动返回
+			<a href="#" class="fanhui1" style="font-size: 27px;background: #337ab7e8;margin-top: 0px; ">点击返回</a>
+		</p>
+
+	</div>
+
+</div>
+</body>
+</html>

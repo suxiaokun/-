@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bysj.xqyj.suxk.dao.UserDao">
+    <insert id="addUser" parameterType="User">
+
+		INSERT INTO xqyjxm.user
+			(uid,
+			username,
+			PASSWORD,
+			role,
+			STATUS,
+			email
+			)
+			VALUES
+			(#{uid},
+			#{username},
+			#{password},
+			#{role},
+			#{status},
+			#{email}
+			);
+
+    </insert>
+
+	<insert id="addStudent" parameterType="Student">
+		INSERT INTO xqyjxm.student
+			(sid,
+			student_name,
+			remove_tag,
+			score,
+			student_email
+			)
+			VALUES
+			(#{sid},
+			#{student_name},
+			#{remove_tag},
+			#{score},
+			#{student_email}
+			);
+
+	</insert>
+	<insert id="addTeacher" parameterType="Teacher">
+		INSERT INTO xqyjxm.teacher
+	(tid,
+	teacher_name,
+	teacher_email
+	)
+	VALUES
+	(#{tid},
+	#{teacher_name},
+	#{teacher_email}
+	)
+
+
+	</insert>
+</mapper>

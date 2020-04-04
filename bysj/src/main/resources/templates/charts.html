@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <title>Title</title>
+
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" style="width: 600px;height:400px;"></div>
+
+</body>
+<script src="js/echarts.js"></script>
+<script src="js/jquery-3.3.1.js"></script>
+<script th:inline="javascript" type="text/javascript" >
+    $(document).ready(function(){
+        var names=[];    //横坐标数组（实际用来盛放X轴坐标值）
+        var values=[];    //纵坐标数组（实际用来盛放Y坐标值）
+        $.ajax({
+            type : "post",
+            async : true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+            url : "/reviewSum",    //请求发送到dataActiont处
+            data : {},
+            dataType : "json",        //返回数据形式为json
+            success : function(result) {
+                //请求成功时执行该函数内容，result即为服务器返回的json对象
+                if (result) {
+                    for(var i=0;i<result.length;i++){
+                        names.push(result[i].name);
+                        values.push(result[i].num);
+                    }
+                    option = {
+                        title: {
+                            text: '学分人数统计'
+                        },
+                        tooltip: {},
+                        legend: {
+                            data:['人数','renshu']
+                        },
+                        xAxis: {
+                            data: ["一级","二级","三级","四级","五级"]
+                        },
+                        yAxis: {},
+                        series: [{
+                            name: '人数',
+                            type: 'bar',
+                            data: [num, two, san, si, 10]
+                        }]
+                    };
+                }
+            },
+            error : function(errorMsg) {
+                //请求失败时执行该函数
+                alert("图表请求数据失败!");
+                myChart.hideLoading();
+            }
+        });//end ajax
+    });
+    // 指定图表的配置项和数据
+
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+</script>
+</html>

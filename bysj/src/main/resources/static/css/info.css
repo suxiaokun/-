@@ -1,0 +1,24 @@
+.info1{
+	font-size: 30px;
+	
+}
+
+.fanhui1{
+	margin-top:20px;
+	display: inline-block;
+	font-size:30px;
+	text-decoration: none;
+	color: white;
+	width: 200px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	border-radius: 5px;
+	background: #2ECC71;
+}
+.fanhui1:hover{
+	font-weight: bold;
+	background: #27AE60;
+	color:white;
+	text-decoration:none;
+}

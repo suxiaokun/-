@@ -1,0 +1,32 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/xqyjxm?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    username: root
+    password: 123
+
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML5
+    encoding: UTF-8
+  mvc:
+    static-path-pattern: /**
+  resources:
+    static-locations: classpath:/static/
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  mail:
+    host: smtp.qq.com
+    default-encoding: UTF-8
+    username: 1224692968@qq.com
+    password: wfsamwnjdprtjdcb
+
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.bysj.xqyj.suxk.pojo

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/login.css"/>
+		<script src="js/jquery-3.3.1.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="login" >
+			<div class="content clearfix">
+				<div class="content-left">
+					<div class="logo"style="width: 340px;">
+						<img src="images/logo.png" alt=""/>
+						<p>学情预警管理系统</p>
+					</div>
+				</div>
+				<div class="shu"></div>
+				<div class="content-right"style="margin-top: -35px">
+					<div class="login-form">
+						<h2>用户登录/LOGIN</h2><span th:text="${msg}" style="color: red;font-size: 18px" ></span>
+                        <form action="/logining" method="post">
+                            <div class="identifire">
+                                <span>身　份：</span>
+                                <select name="role">
+                                    <option value="0" selected="selected" >学生</option>
+                                    <option value="1" >教师教辅人员</option>
+                                    <option value="2" >管理员</option>
+                                </select>
+                            </div>
+                            <div class="account clearfix">
+                                <span>账　号：</span>
+                                <input type="text" value="" name="uid"/>
+                            </div>
+                            <div class="password clearfix">
+                                <span>密　码：</span>
+                                <input type="password" value="" name="password"/>
+                            </div>
+                            <div class="code clearfix">
+                                <span>验证码：</span>
+                                <input type="text" value="" name="code"/>
+                                <em><img src="kaptcha/getKaptchaImage" class="reloadImage" id="reloadImage"
+                                         width="125" height="35"/><a href="javaScript:;" class="l-color9 reloadImage">看不清，换一张</a></em>
+                            </div>
+                            <div class="btn">
+                                <span id="login3"><a><input type="submit" value="登陆" id="login"></a></span>
+                                <span class="forget"><a href="/forget">忘记密码</a></span>
+                            </div>
+                        </form>
+		</div>
+				</div>
+			</div>
+		</div>
+        <div th:if="${msg} ">
+            <script type="text/javascript">
+                alert([[${msg}]])
+            </script>
+        </div>
+        <script>
+            $(".reloadImage").click(function () {
+
+//获取当前的时间作为参数，无具体意义
+                var timenow = new Date().getTime();
+                $('#reloadImage').attr("src", "kaptcha/getKaptchaImage?date=" + timenow);
+            });
+        </script>
+	</body>
+</html>
